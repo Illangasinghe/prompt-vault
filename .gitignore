@@ -135,3 +135,6 @@ prisma/migrations/dev.db*
 
 # Husky
 .husky/_/
+
+# WSL specific
+*.Identifier
