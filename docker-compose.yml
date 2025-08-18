@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: prompt_vault_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: prompt_vault_db
+      POSTGRES_USER: prompt_vault_user  
+      POSTGRES_PASSWORD: secure_password_change_this
+      PGDATA: /data/postgres
+    volumes:
+      - postgres_data:/data/postgres
+      - ./init-scripts:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+    networks:
+      - prompt_vault_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prompt_vault_user -d prompt_vault_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PgAdmin (Optional - for database management)
+  pgadmin:
+    image: dpage/pgadmin4:7
+    container_name: prompt_vault_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@promptvault.com
+      PGADMIN_DEFAULT_PASSWORD: admin_password_change_this
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - prompt_vault_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - admin # Only start with: docker-compose --profile admin up
+
+  # Redis (Optional - for caching/sessions)
+  redis:
+    image: redis:7-alpine
+    container_name: prompt_vault_redis
+    restart: unless-stopped
+    command: redis-server --requirepass redis_password_change_this
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - prompt_vault_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - cache # Only start with: docker-compose --profile cache up
+
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  prompt_vault_network:
+    driver: bridge

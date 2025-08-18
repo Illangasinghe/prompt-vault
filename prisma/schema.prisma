@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  prompts   Prompt[]
+  tags      Tag[]
+}
+
+model Prompt {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  title      String
+  body       String
+  isFavorite Boolean  @default(false)
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  tags       PromptTag[]
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  name      String
+  createdAt DateTime @default(now())
+  prompts   PromptTag[]
+
+  @@unique([userId, name])
+}
+
+model PromptTag {
+  id       String @id @default(uuid())
+  prompt   Prompt @relation(fields: [promptId], references: [id])
+  promptId String
+  tag      Tag    @relation(fields: [tagId], references: [id])
+  tagId    String
+
+  @@unique([promptId, tagId])
+}
+
+
