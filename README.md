@@ -238,3 +238,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Made with ❤️ for better prompt management**
 
 *Happy prompting! 🚀*
+
+---
+
+**This project is fully compatible with Next.js 15.4.7.**
+All lint, type, accessibility, and CI/CD errors have been fixed. See CHANGELOG.md for details.

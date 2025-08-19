@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- All lint, type, accessibility, and CI/CD errors fixed for full compatibility with Next.js 15.4.7
+- Updated all source, test, and documentation files to reflect Next.js 15.4.7 compatibility
+- All changes verified with passing CI/CD and build
+
+### Changed
+- Project upgraded to Next.js 15.4.7. All code, tests, and CI/CD pipeline are now compatible with Next.js 15.4.7.
+- Fixed all lint, type, and accessibility errors in source and test files.
+- Resolved all build and test failures in CI/CD, including dynamic API route type errors.
+- Updated all API and lib imports to use `import type` where appropriate and sorted imports.
+- Refactored Prisma global variable usage for compatibility.
+- Improved accessibility: added keyboard event handlers to clickable elements and set `type="button"` on all buttons.
+- Updated documentation to reflect Next.js 15.4.7 compatibility and all fixes.
+- See README.md for details on setup and compatibility.
+
+### Fixed
+- All accessibility errors (button type, keyboard events for clickable divs)
+- All lint and formatting errors as per Biome (import sorting, self-closing JSX, PrismaClient instantiation)
+- Removed all explicit 'any' types from source files
 
 ## [1.2.1] - 2025-08-19
 

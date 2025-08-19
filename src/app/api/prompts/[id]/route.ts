@@ -14,7 +14,7 @@ const UpdatePromptSchema = z.object({
 // GET single prompt
 export async function GET(
 	req: NextRequest,
-	{ params }: { params: { id: string } },
+	context: any,
 ) {
 	try {
 		const user = await getUser(req);
@@ -22,7 +22,7 @@ export async function GET(
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
 		const prompt = await prisma.prompt.findFirst({
-			where: { id: params.id, userId: user.id },
+			where: { id: context.params.id, userId: user.id },
 			include: { tags: { include: { tag: true } } },
 		});
 
@@ -51,7 +51,7 @@ export async function GET(
 // PUT update prompt
 export async function PUT(
 	req: NextRequest,
-	{ params }: { params: { id: string } },
+	context: any,
 ) {
 	try {
 		const user = await getUser(req);
@@ -63,7 +63,7 @@ export async function PUT(
 
 		// Check if prompt exists and belongs to user
 		const existingPrompt = await prisma.prompt.findFirst({
-			where: { id: params.id, userId: user.id },
+			where: { id: context.params.id, userId: user.id },
 		});
 
 		if (!existingPrompt) {
@@ -73,7 +73,7 @@ export async function PUT(
 		const updated = await prisma.$transaction(async (tx) => {
 			// Update prompt
 			const prompt = await tx.prompt.update({
-				where: { id: params.id },
+				where: { id: context.params.id },
 				data: {
 					...(parsed.title !== undefined && { title: parsed.title }),
 					...(parsed.body !== undefined && { body: parsed.body }),
@@ -90,7 +90,7 @@ export async function PUT(
 			if (parsed.tags !== undefined) {
 				// Remove existing tags
 				await tx.promptTag.deleteMany({
-					where: { promptId: params.id },
+					where: { promptId: context.params.id },
 				});
 
 				// Add new tags
@@ -132,7 +132,7 @@ export async function PUT(
 // DELETE prompt
 export async function DELETE(
 	req: NextRequest,
-	{ params }: { params: { id: string } },
+	context: any,
 ) {
 	try {
 		const user = await getUser(req);
@@ -141,7 +141,7 @@ export async function DELETE(
 
 		// Check if prompt exists and belongs to user
 		const existingPrompt = await prisma.prompt.findFirst({
-			where: { id: params.id, userId: user.id },
+			where: { id: context.params.id, userId: user.id },
 		});
 
 		if (!existingPrompt) {
@@ -151,12 +151,12 @@ export async function DELETE(
 		await prisma.$transaction(async (tx) => {
 			// Delete prompt tags first (foreign key constraint)
 			await tx.promptTag.deleteMany({
-				where: { promptId: params.id },
+				where: { promptId: context.params.id },
 			});
 
 			// Delete the prompt
 			await tx.prompt.delete({
-				where: { id: params.id },
+				where: { id: context.params.id },
 			});
 		});
 

@@ -84,6 +84,7 @@ export default function NewPromptDialog({
 				</div>
 				<div className="mt-4 flex gap-2 justify-end">
 					<button
+						type="button"
 						onClick={handleClose}
 						className="px-4 py-2 rounded-xl border hover:bg-gray-50"
 						disabled={busy}
@@ -91,6 +92,7 @@ export default function NewPromptDialog({
 						Cancel
 					</button>
 					<button
+						type="button"
 						disabled={!canSave || busy}
 						onClick={save}
 						className="px-4 py-2 rounded-xl bg-blue-600 text-white disabled:opacity-60 hover:bg-blue-700"

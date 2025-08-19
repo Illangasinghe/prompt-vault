@@ -372,7 +372,7 @@ export default function HomePage() {
 					{/* Tag filter */}
 					{allTags.length > 0 && (
 						<>
-							<div className="h-6 w-px bg-gray-300"></div>
+							<div className="h-6 w-px bg-gray-300" />
 							<span className="text-sm text-gray-500 font-medium">🏷️ Tags:</span>
 							<button
 								onClick={() => setSelectedTag(null)}
@@ -499,7 +499,7 @@ export default function HomePage() {
 							>
 								{loadingMore ? (
 									<div className="flex items-center gap-2">
-										<div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+										<div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
 										Loading more...
 									</div>
 								) : (
@@ -563,7 +563,7 @@ export default function HomePage() {
 									</span>
 									<span className="text-gray-500 text-xs">prompts</span>
 								</div>
-								<div className="hidden sm:block w-px h-4 bg-gray-300"></div>
+								<div className="hidden sm:block w-px h-4 bg-gray-300" />
 								<div className="flex items-center gap-1.5 text-sm">
 									<span className="text-red-400">♥</span>
 									<span className="font-medium text-gray-700">
@@ -571,7 +571,7 @@ export default function HomePage() {
 									</span>
 									<span className="text-gray-500 text-xs">favorites</span>
 								</div>
-								<div className="hidden sm:block w-px h-4 bg-gray-300"></div>
+								<div className="hidden sm:block w-px h-4 bg-gray-300" />
 								<div className="flex items-center gap-1.5 text-sm">
 									<span className="text-blue-400">📦</span>
 									<span className="font-medium text-gray-700">
@@ -579,7 +579,7 @@ export default function HomePage() {
 									</span>
 									<span className="text-gray-500 text-xs">archived</span>
 								</div>
-								<div className="hidden sm:block w-px h-4 bg-gray-300"></div>
+								<div className="hidden sm:block w-px h-4 bg-gray-300" />
 								<div className="flex items-center gap-1.5 text-sm">
 									<span className="text-purple-400">🏷️</span>
 									<span className="font-medium text-gray-700">

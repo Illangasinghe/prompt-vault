@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface EditPromptDialogProps {
 	promptId: string | null;
@@ -102,6 +102,7 @@ export default function EditPromptDialog({
 			<div className="w-full max-w-xl rounded-2xl bg-white p-4 relative">
 				{/* Close button */}
 				<button
+					type="button"
 					onClick={onClose}
 					className="absolute top-3 right-3 p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer select-none"
 					title="Close"
@@ -158,6 +159,7 @@ export default function EditPromptDialog({
 
 						<div className="mt-4 flex gap-2 justify-end">
 							<button
+								type="button"
 								onClick={onClose}
 								className="px-4 py-2 rounded-xl border hover:bg-gray-50"
 								disabled={busy}
@@ -165,6 +167,7 @@ export default function EditPromptDialog({
 								Cancel
 							</button>
 							<button
+								type="button"
 								disabled={!canSave || busy}
 								onClick={save}
 								className="px-4 py-2 rounded-xl bg-blue-600 text-white disabled:opacity-60 hover:bg-blue-700"

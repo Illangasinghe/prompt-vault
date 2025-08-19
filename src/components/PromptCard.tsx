@@ -46,25 +46,40 @@ export default function PromptCard({
 		}
 	}
 
+	const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
+		e.stopPropagation();
+		onEdit(id);
+	};
+
+	const onToggleFavorite = () => {
+		onFavorite(id, !isFavorite);
+	};
+
+	const onToggleArchive = () => {
+		onArchive(id, !isArchived);
+	};
+
 	return (
 		<div
-			className={`rounded-2xl bg-white shadow-sm p-4 border hover:shadow-md transition-all duration-200 relative group cursor-pointer select-none ${
-				isArchived
-					? "border-gray-200 bg-gray-50"
-					: "border-gray-200 hover:border-gray-300"
-			} ${isFavorite ? "ring-1 ring-red-100" : ""}`}
-			onClick={() => onEdit(id)}
+			className={`rounded-2xl bg-white shadow-sm p-4 border hover:shadow-md transition-all duration-200 relative group cursor-pointer select-none ${showActions ? "ring-2 ring-blue-500" : ""}`}
+			onClick={handleClick}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					handleClick(e);
+				}
+			}}
+			tabIndex={0}
+			role="button"
+			aria-label={title}
 			onMouseEnter={() => setShowActions(true)}
 			onMouseLeave={() => setShowActions(false)}
 		>
 			{/* Action buttons */}
-			<div
-				className={`absolute top-2 right-2 flex gap-1.5 transition-opacity ${showActions ? "opacity-100" : "opacity-0"}`}
-			>
-				<button
+			<div className={`absolute top-2 right-2 flex gap-1.5 transition-opacity ${showActions ? "opacity-100" : "opacity-0"}`}>
+				<button type="button"
 					onClick={(e) => {
 						e.stopPropagation();
-						onFavorite(id, !isFavorite);
+						onToggleFavorite();
 					}}
 					className={`p-2 rounded-lg text-base transition-colors cursor-pointer select-none ${
 						isFavorite
@@ -75,10 +90,10 @@ export default function PromptCard({
 				>
 					♥
 				</button>
-				<button
+				<button type="button"
 					onClick={(e) => {
 						e.stopPropagation();
-						onArchive(id, !isArchived);
+						onToggleArchive();
 					}}
 					className={`p-2 rounded-lg text-base transition-colors cursor-pointer select-none ${
 						isArchived
@@ -89,7 +104,7 @@ export default function PromptCard({
 				>
 					📦
 				</button>
-				<button
+				<button type="button"
 					onClick={(e) => {
 						e.stopPropagation();
 						handleDelete();
@@ -100,9 +115,8 @@ export default function PromptCard({
 					🗑️
 				</button>
 			</div>
-
 			{/* Copy button - always visible in bottom right */}
-			<button
+			<button type="button"
 				onClick={(e) => {
 					e.stopPropagation();
 					handleCopy();

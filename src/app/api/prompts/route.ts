@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
 			body: p.body,
 			isFavorite: p.isFavorite,
 			isArchived: p.isArchived,
-			tags: Array.isArray(p.tags) ? p.tags.map((t: any) => t.tag.name) : [],
+			tags: Array.isArray(p.tags) ? p.tags.map((t) => t.tag.name) : [],
 			updatedAt: p.updatedAt,
 		})),
 	);
