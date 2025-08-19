@@ -21,12 +21,17 @@ jest.mock("../../src/lib/prisma", () => ({
 	},
 }));
 
-import { POST, GET } from "../../src/app/api/prompts/route";
+import { GET, POST } from "../../src/app/api/prompts/route";
 import { getUser } from "../../src/lib/auth";
 import { prisma } from "../../src/lib/prisma";
 
 const mockGetUser = getUser as jest.MockedFunction<typeof getUser>;
-const mockPrisma = prisma as any;
+const mockPrisma = prisma as typeof prisma;
+(mockPrisma.prompt.create as jest.Mock).mockClear();
+(mockPrisma.prompt.findMany as jest.Mock).mockClear();
+(mockPrisma.tag.upsert as jest.Mock).mockClear();
+(mockPrisma.promptTag.create as jest.Mock).mockClear();
+(mockPrisma.$transaction as jest.Mock).mockClear();
 
 describe("/api/prompts", () => {
 	beforeEach(() => {
@@ -87,8 +92,8 @@ describe("/api/prompts", () => {
 			};
 
 			mockGetUser.mockResolvedValue(mockUser);
-			mockPrisma.$transaction.mockImplementation(async (callback: any) => {
-				mockPrisma.prompt.create.mockResolvedValue(mockPrompt);
+			(mockPrisma.prompt.create as jest.Mock).mockResolvedValue(mockPrompt);
+			(mockPrisma.$transaction as jest.Mock).mockImplementation(async (callback: (tx: typeof mockPrisma) => Promise<unknown>) => {
 				return callback(mockPrisma);
 			});
 
@@ -131,10 +136,10 @@ describe("/api/prompts", () => {
 			const mockTag = { id: "tag1", name: "test", userId: "user1" };
 
 			mockGetUser.mockResolvedValue(mockUser);
-			mockPrisma.$transaction.mockImplementation(async (callback: any) => {
-				mockPrisma.prompt.create.mockResolvedValue(mockPrompt);
-				mockPrisma.tag.upsert.mockResolvedValue(mockTag);
-				mockPrisma.promptTag.create.mockResolvedValue({ id: "pt1" });
+			(mockPrisma.prompt.create as jest.Mock).mockResolvedValue(mockPrompt);
+			(mockPrisma.tag.upsert as jest.Mock).mockResolvedValue(mockTag);
+			(mockPrisma.promptTag.create as jest.Mock).mockResolvedValue({ id: "pt1" });
+			(mockPrisma.$transaction as jest.Mock).mockImplementation(async (callback: (tx: typeof mockPrisma) => Promise<unknown>) => {
 				return callback(mockPrisma);
 			});
 
@@ -169,7 +174,7 @@ describe("/api/prompts", () => {
 			const mockUser = { id: "user1", email: "test@example.com" };
 
 			mockGetUser.mockResolvedValue(mockUser);
-			mockPrisma.$transaction.mockRejectedValue(new Error("Database error"));
+			(mockPrisma.$transaction as jest.Mock).mockRejectedValue(new Error("Database error"));
 
 			const request = new NextRequest("http://localhost:3000/api/prompts", {
 				method: "POST",
@@ -219,7 +224,7 @@ describe("/api/prompts", () => {
 			];
 
 			mockGetUser.mockResolvedValue(mockUser);
-			mockPrisma.prompt.findMany.mockResolvedValue(mockPrompts);
+			(mockPrisma.prompt.findMany as jest.Mock).mockResolvedValue(mockPrompts);
 
 			const request = new NextRequest("http://localhost:3000/api/prompts");
 
