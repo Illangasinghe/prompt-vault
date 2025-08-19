@@ -3,13 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --bg: 246 246 247;
+	--bg: 246 246 247;
 }
 
-html, body, #__next {
-  height: 100%;
+html,
+body,
+#__next {
+	height: 100%;
 }
 
 body {
-  background: rgb(var(--bg));
+	background: rgb(var(--bg));
 }
