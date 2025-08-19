@@ -43,7 +43,7 @@ A powerful, secure prompt management application for organizing and storing your
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 14.2+ (App Router), React, TypeScript, Tailwind CSS
 - **Backend**: Next.js API Routes, Prisma ORM
 - **Database**: PostgreSQL
 - **Authentication**: Custom JWT with HTTP-only cookies
