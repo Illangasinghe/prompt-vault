@@ -16,7 +16,7 @@ jobs:
         image: postgres:15
         env:
           POSTGRES_DB: test_db
-          POSTGRES_USER: test_user
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: test_password
         options: >-
           --health-cmd pg_isready
@@ -36,11 +36,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
 
-      - name: 🔧 Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-      - name: 🔧 Fallback install pnpm (if needed)
+      - name: Install pnpm
         run: npm install -g pnpm
       - name: 🔍 Check pnpm version
         run: pnpm --version
@@ -50,7 +46,7 @@ jobs:
 
       - name: 🗄️ Setup test database
         env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          DATABASE_URL: postgresql://postgres:test_password@localhost:5432/test_db
           JWT_SECRET: test-jwt-secret-for-ci
         run: |
           pnpm prisma generate
@@ -58,7 +54,7 @@ jobs:
 
       - name: 🧪 Run tests
         env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          DATABASE_URL: postgresql://postgres:test_password@localhost:5432/test_db
           JWT_SECRET: test-jwt-secret-for-ci
         run: pnpm test
 
@@ -67,7 +63,7 @@ jobs:
 
       - name: 🏗️ Build application
         env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          DATABASE_URL: postgresql://postgres:test_password@localhost:5432/test_db
           JWT_SECRET: test-jwt-secret-for-ci
         run: pnpm build
 
