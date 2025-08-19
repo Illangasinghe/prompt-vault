@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-08-19
+
+### Changed
+- Upgraded Next.js to 14.2+ to resolve security vulnerabilities and improve stability
+- Updated CI/CD workflow to ensure pnpm is installed before use
+- Changed CI/CD PostgreSQL user to 'postgres' for compatibility
+- Updated documentation to reflect new Next.js version
+
+### Fixed
+- CI/CD pipeline failures due to missing pnpm and invalid PostgreSQL role
+- Security audit now passes with no known vulnerabilities
+
+### Documentation
+- README.md and CHANGELOG.md updated to mention Next.js 14.2+
+- CONTRIBUTING.md and DEVELOPMENT.md checked for version references (no changes needed)
+
 ## [1.1.0] - 2025-01-19
 
 ### Added
@@ -90,7 +106,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Professional footer with statistics
 
 ### Technical
-- **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 14.2+ (App Router), React, TypeScript, Tailwind CSS
 - **Backend**: Next.js API Routes, Prisma ORM
 - **Database**: PostgreSQL with proper indexing
 - **Authentication**: Custom JWT with HTTP-only cookies
