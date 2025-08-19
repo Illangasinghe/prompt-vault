@@ -1,7 +1,7 @@
-import { prisma } from "@/lib/prisma";
 import { getUser } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { NextRequest, NextResponse } from "next/server";
 
 const CreateBody = z.object({
 	title: z.string().min(1).max(200),
@@ -22,20 +22,22 @@ export async function GET(req: NextRequest) {
 	const take = Math.min(Number(searchParams.get("limit")) || 20, 100);
 	const skip = Math.max(Number(searchParams.get("offset")) || 0, 0);
 
-	const where = {
+	const where: import("@prisma/client").Prisma.PromptWhereInput = {
 		userId: user.id,
 		isFavorite: fav ? true : undefined,
-		isArchived: archived ? true : false,
+		isArchived: !!archived,
 		OR: q
 			? [
-					{ title: { contains: q, mode: "insensitive" } },
-					{ body: { contains: q, mode: "insensitive" } },
-				]
+				{ title: { contains: q, mode: "insensitive" as const } },
+				{ body: { contains: q, mode: "insensitive" as const } },
+			]
 			: undefined,
 	};
 
-	// Dynamic sorting based on sort parameter
-	const orderBy = sort === "title" ? { title: "asc" } : { updatedAt: "desc" };
+	const orderBy: import("@prisma/client").Prisma.PromptOrderByWithRelationInput =
+		sort === "title"
+			? { title: "asc" as const }
+			: { updatedAt: "desc" as const };
 
 	const prompts = await prisma.prompt.findMany({
 		where,
@@ -54,7 +56,7 @@ export async function GET(req: NextRequest) {
 			body: p.body,
 			isFavorite: p.isFavorite,
 			isArchived: p.isArchived,
-			tags: p.tags.map((t) => t.tag.name),
+			tags: Array.isArray(p.tags) ? p.tags.map((t: any) => t.tag.name) : [],
 			updatedAt: p.updatedAt,
 		})),
 	);

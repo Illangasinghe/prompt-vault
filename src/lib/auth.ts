@@ -1,7 +1,7 @@
-import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcryptjs";
+import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { prisma } from "./prisma";
 
 const secret = new TextEncoder().encode(
@@ -54,7 +54,7 @@ export async function getUser(req?: NextRequest): Promise<User | null> {
 			token = req.cookies.get("auth-token")?.value;
 		} else {
 			// For server components
-			const cookieStore = cookies();
+			const cookieStore = await cookies();
 			token = cookieStore.get("auth-token")?.value;
 		}
 

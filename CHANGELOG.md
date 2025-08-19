@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1] - 2025-08-19
+
+### Fixed
+- All lint/type errors in source and test files (import type, import sorting, Prisma global, ternary, etc.)
+- Jest test mocks for Prisma methods now use correct jest.Mock typing
+- Type errors in API prompt route and auth (PromptWhereInput, cookies usage)
+- CI/CD pipeline now passes with zero source lint errors
+
+### Changed
+- Refactored Prisma global variable to avoid redeclaration
+- Updated all API and lib imports to use 'import type' where appropriate
+- Improved code formatting and import sorting for consistency
+
+### Documentation
+- Updated CHANGELOG.md to reflect all lint/type/test/CI fixes for 1.2.1
+
 ## [1.2.0] - 2025-08-19
 
 ### Changed

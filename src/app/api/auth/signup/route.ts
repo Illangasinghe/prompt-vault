@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { createToken, signUp } from "@/lib/auth";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { signUp, createToken } from "@/lib/auth";
 
 const SignUpSchema = z.object({
 	email: z.string().email(),

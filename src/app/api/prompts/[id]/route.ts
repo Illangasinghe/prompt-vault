@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import { getUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 const UpdatePromptSchema = z.object({
 	title: z.string().min(1).max(200).optional(),
