@@ -6,6 +6,56 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- All lint, type, accessibility, and CI/CD errors fixed for full compatibility with Next.js 15.4.7
+- Updated all source, test, and documentation files to reflect Next.js 15.4.7 compatibility
+- All changes verified with passing CI/CD and build
+
+### Changed
+- Project upgraded to Next.js 15.4.7. All code, tests, and CI/CD pipeline are now compatible with Next.js 15.4.7.
+- Fixed all lint, type, and accessibility errors in source and test files.
+- Resolved all build and test failures in CI/CD, including dynamic API route type errors.
+- Updated all API and lib imports to use `import type` where appropriate and sorted imports.
+- Refactored Prisma global variable usage for compatibility.
+- Improved accessibility: added keyboard event handlers to clickable elements and set `type="button"` on all buttons.
+- Updated documentation to reflect Next.js 15.4.7 compatibility and all fixes.
+- See README.md for details on setup and compatibility.
+
+### Fixed
+- All accessibility errors (button type, keyboard events for clickable divs)
+- All lint and formatting errors as per Biome (import sorting, self-closing JSX, PrismaClient instantiation)
+- Removed all explicit 'any' types from source files
+
+## [1.2.1] - 2025-08-19
+
+### Fixed
+- All lint/type errors in source and test files (import type, import sorting, Prisma global, ternary, etc.)
+- Jest test mocks for Prisma methods now use correct jest.Mock typing
+- Type errors in API prompt route and auth (PromptWhereInput, cookies usage)
+- CI/CD pipeline now passes with zero source lint errors
+
+### Changed
+- Refactored Prisma global variable to avoid redeclaration
+- Updated all API and lib imports to use 'import type' where appropriate
+- Improved code formatting and import sorting for consistency
+
+### Documentation
+- Updated CHANGELOG.md to reflect all lint/type/test/CI fixes for 1.2.1
+
+## [1.2.0] - 2025-08-19
+
+### Changed
+- Upgraded Next.js to 14.2+ to resolve security vulnerabilities and improve stability
+- Updated CI/CD workflow to ensure pnpm is installed before use
+- Changed CI/CD PostgreSQL user to 'postgres' for compatibility
+- Updated documentation to reflect new Next.js version
+
+### Fixed
+- CI/CD pipeline failures due to missing pnpm and invalid PostgreSQL role
+- Security audit now passes with no known vulnerabilities
+
+### Documentation
+- README.md and CHANGELOG.md updated to mention Next.js 14.2+
+- CONTRIBUTING.md and DEVELOPMENT.md checked for version references (no changes needed)
 
 ## [1.1.0] - 2025-01-19
 
@@ -90,7 +140,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Professional footer with statistics
 
 ### Technical
-- **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 14.2+ (App Router), React, TypeScript, Tailwind CSS
 - **Backend**: Next.js API Routes, Prisma ORM
 - **Database**: PostgreSQL with proper indexing
 - **Authentication**: Custom JWT with HTTP-only cookies

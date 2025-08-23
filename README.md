@@ -43,7 +43,7 @@ A powerful, secure prompt management application for organizing and storing your
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 14.2+ (App Router), React, TypeScript, Tailwind CSS
 - **Backend**: Next.js API Routes, Prisma ORM
 - **Database**: PostgreSQL
 - **Authentication**: Custom JWT with HTTP-only cookies
@@ -238,3 +238,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Made with ❤️ for better prompt management**
 
 *Happy prompting! 🚀*
+
+---
+
+**This project is fully compatible with Next.js 15.4.7.**
+All lint, type, accessibility, and CI/CD errors have been fixed. See CHANGELOG.md for details.
